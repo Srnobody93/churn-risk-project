@@ -7,7 +7,409 @@
 :root{
  --bg:#0F1115;--panel:#16191E;--panel-2:#1C2128;--panel-3:#21262D;--border:#2D333B;
  --text:#E0E0E0;--white:#fff;--muted:#8B949E;
+ --rose:#fb7185;--rose-bg:rgba(244,63,94,.10);--rose-bd:rgba(244,63,94,.28);<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Churn Radar SSL (Copy)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{
+ --bg:#0F1115;--panel:#16191E;--panel-2:#1C2128;--panel-3:#21262D;--border:#2D333B;
+ --text:#E0E0E0;--white:#fff;--muted:#8B949E;
  --rose:#fb7185;--rose-bg:rgba(244,63,94,.10);--rose-bd:rgba(244,63,94,.28);
+ --amber:#fbbf24;--amber-bg:rgba(245,158,11,.10);--amber-bd:rgba(245,158,11,.28);
+ --emerald:#34d399;--emerald-bg:rgba(16,185,129,.10);--emerald-bd:rgba(16,185,129,.28);
+ --sky:#38bdf8;--sky-bg:rgba(56,189,248,.10);--sky-bd:rgba(56,189,248,.28);
+ --indigo:#818cf8;--indigo-bg:rgba(99,102,241,.12);--indigo-bd:rgba(99,102,241,.30);
+ --purple:#c084fc;--purple-bg:rgba(168,85,247,.10);--purple-bd:rgba(168,85,247,.28);
+ --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;--sans:'Inter',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
+.mono{font-family:var(--mono)}.tnum{font-variant-numeric:tabular-nums}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:16px}
+::selection{background:var(--rose);color:#fff}
+button{font-family:inherit;cursor:pointer}
+header.app{border-bottom:1px solid var(--border);background:var(--panel);padding-block:16px}
+.brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#e11d48,#4f46e5);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.brand h1{font:700 18px/1 var(--mono);margin:0;color:#fff;letter-spacing:-.4px}
+.brand p{margin:4px 0 0;font-size:12px;color:var(--muted)}
+.live{display:inline-flex;align-items:center;gap:6px;font:600 10px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.5px;color:var(--emerald);background:var(--emerald-bg);border:1px solid var(--emerald-bd);padding:3px 8px;border-radius:6px}
+.live .dot{width:7px;height:7px;border-radius:50%;background:var(--emerald);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.src-line{margin-top:10px;font:500 11px/1.5 var(--mono);color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16px}
+.src-line b{color:var(--text);font-weight:600}
+main{padding-block:20px 48px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:var(--panel);border:1px solid var(--border);border-radius:11px;padding:13px}
+.kpi .k-l{font:700 9.5px/1.3 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.kpi .k-v{font:700 22px/1.05 var(--mono);color:#fff;margin-top:8px;letter-spacing:-.5px}
+.kpi .k-s{font:500 11px/1.3 var(--mono);margin-top:4px;color:var(--muted)}
+.section-title{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:26px 0 12px}
+.section-title h2{margin:0;font:700 14px/1.2 var(--sans);color:#fff}
+.section-title span{font:500 11.5px/1 var(--mono);color:var(--muted)}
+.ov-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:6px}
+.reason-bars{margin-top:6px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:11px;overflow:hidden}
+.card.pad{padding:15px}
+.brk{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(45,51,59,.5)}
+.brk:last-child{border:none}
+.brk .lab{font:500 12px/1.3 var(--sans);min-width:110px}
+.brk .bar{flex:1;height:8px;border-radius:4px;background:var(--panel-3);overflow:hidden;display:flex}
+.brk .bar>i{display:block;height:100%}
+.brk .n{font:700 11px/1 var(--mono);color:var(--muted);min-width:64px;text-align:right}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+.toolbar input,.toolbar select{background:var(--panel);border:1px solid var(--border);color:var(--text);font:500 12px/1 var(--sans);padding:7px 10px;border-radius:8px}
+.toolbar input{min-width:180px}
+.toolbar input:focus,.toolbar select:focus{outline:2px solid var(--indigo)}
+.count{margin-left:auto;font:600 11px/1 var(--mono);color:var(--muted)}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:940px}
+thead th{position:sticky;top:0;background:var(--panel-2);padding:9px 12px;text-align:left;font:700 10px/1.2 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none}
+thead th.sorted{color:var(--indigo)}
+th.num,td.num{text-align:right}
+tbody td{padding:10px 12px;border-bottom:1px solid rgba(45,51,59,.5);font-size:12.5px;vertical-align:middle}
+tbody tr{cursor:pointer}tbody tr:hover{background:var(--panel-2)}
+.scorebadge{display:inline-flex;align-items:center;justify-content:center;min-width:34px;padding:3px 7px;border-radius:7px;font:700 12px/1 var(--mono)}
+.b-critical{background:var(--rose-bg);color:var(--rose);border:1px solid var(--rose-bd)}
+.b-high{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd)}
+.b-medium{background:var(--sky-bg);color:var(--sky);border:1px solid var(--sky-bd)}
+.b-low{background:var(--panel-3);color:var(--muted);border:1px solid var(--border)}
+.acc{font-weight:600;color:#fff}
+.sub{font:500 10.5px/1.4 var(--mono);color:var(--muted);margin-top:2px}
+.pill{display:inline-block;padding:2px 7px;border-radius:5px;font:600 10px/1.4 var(--mono);border:1px solid var(--border);background:var(--panel-3);color:var(--muted)}
+.stg{font:600 11px/1 var(--mono);white-space:nowrap}
+.cov{display:inline-flex;gap:3px}
+.cov i{width:6px;height:6px;border-radius:50%;background:var(--border)}
+.cov i.on{background:var(--emerald)}
+.na{color:var(--muted)}
+.note{display:flex;gap:9px;align-items:flex-start;background:var(--amber-bg);border:1px solid var(--amber-bd);color:#fcd34d;font-size:12px;line-height:1.5;padding:10px 13px;border-radius:9px;margin-top:12px}
+.note svg{width:15px;height:15px;flex:0 0 auto;margin-top:2px}
+.note.info{background:var(--indigo-bg);border-color:var(--indigo-bd);color:#a5b4fc}
+.digest-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+.drv{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(45,51,59,.5)}
+.drv:last-child{border:none}
+.drv .bar{flex:1;height:7px;border-radius:4px;background:var(--panel-3);overflow:hidden}
+.drv .bar>span{display:block;height:100%;background:var(--rose);border-radius:4px}
+.drv .lab{font:500 12px/1.3 var(--sans);min-width:210px}
+.drv .n{font:700 12px/1 var(--mono);color:var(--rose);min-width:26px;text-align:right}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;font:600 12px/1 var(--sans);border-radius:8px;border:1px solid var(--border);background:var(--panel-2);color:var(--text)}
+.btn:hover{border-color:#3a4048}
+.btn-p{background:linear-gradient(90deg,#e11d48,#4f46e5);border:none;color:#fff}
+.btn svg{width:14px;height:14px}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(3px);z-index:60;display:flex;justify-content:flex-end}
+.overlay[hidden]{display:none}
+.drawer{width:min(560px,100%);height:100%;background:var(--bg);border-left:1px solid var(--border);overflow-y:auto;padding:20px;animation:slideIn .2s ease}
+@keyframes slideIn{from{transform:translateX(30px);opacity:.6}to{transform:none;opacity:1}}
+.d-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.d-name{font:700 18px/1.15 var(--sans);color:#fff}
+.d-sub{font:500 11.5px/1.5 var(--mono);color:var(--muted);margin-top:4px}
+.x{background:var(--panel-2);border:1px solid var(--border);border-radius:8px;color:var(--muted);width:32px;height:32px;flex:0 0 auto;font-size:16px}
+.gaugewrap{display:flex;align-items:center;gap:14px;margin:16px 0;padding:14px;background:var(--panel);border:1px solid var(--border);border-radius:11px}
+.signals{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.sig{background:var(--panel);border:1px solid var(--border);border-radius:9px;padding:11px}
+.sig .s-l{font:700 9px/1.2 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.sig .s-v{font:700 16px/1.1 var(--mono);color:#fff;margin-top:6px}
+.sig .s-x{font:500 10px/1.3 var(--mono);color:var(--muted);margin-top:3px}
+.drv-list{list-style:none;padding:0;margin:10px 0;display:flex;flex-direction:column;gap:6px}
+.drv-list li{display:flex;gap:8px;font-size:12.5px;color:#c9d1d9}
+.drv-list li svg{width:14px;height:14px;color:var(--rose);flex:0 0 auto;margin-top:2px}
+.csm-box{background:var(--panel);border:1px solid var(--purple-bd);border-radius:11px;padding:14px;margin-top:16px}
+.csm-box h3{margin:0 0 4px;font:600 12px/1.2 var(--sans);color:var(--purple);display:flex;align-items:center;gap:7px}
+.csm-box h3 svg{width:15px;height:15px}
+.csm-box p.hint{margin:0 0 10px;font-size:11px;color:var(--muted)}
+.csm-box textarea{width:100%;min-height:70px;background:var(--panel-2);border:1px solid var(--border);border-radius:8px;color:var(--text);font:500 12px/1.5 var(--sans);padding:9px;resize:vertical}
+.adj{display:flex;align-items:center;gap:10px;margin-top:10px}
+.adj input[type=range]{flex:1}
+.adj .v{font:700 13px/1 var(--mono);color:var(--purple);min-width:64px;text-align:right}
+.saved{font:600 11px/1 var(--mono);color:var(--emerald);margin-top:8px;height:14px}
+#toast{position:fixed;right:16px;bottom:16px;z-index:80;display:flex;flex-direction:column;gap:8px;max-width:min(360px,90vw)}
+.t{display:flex;gap:8px;padding:10px 12px;border-radius:8px;font:600 11.5px/1.4 var(--mono);border:1px solid;box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.t svg{width:15px;height:15px;flex:0 0 auto}
+.t.success{background:#052e1b;color:#a7f3d0;border-color:var(--emerald-bd)}
+.t.alert{background:#4c0519;color:#fecdd3;border-color:var(--rose-bd)}
+.t.info{background:#0b2942;color:#bae6fd;border-color:var(--sky-bd)}
+footer{border-top:1px solid var(--border);background:var(--panel);padding-block:14px}
+footer .f{font:500 11px/1.7 var(--mono);color:var(--muted)}
+.conf{color:var(--rose)}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.digest-grid{grid-template-columns:1fr}.ov-grid{grid-template-columns:1fr 1fr}.signals{grid-template-columns:1fr}}
+@media(max-width:640px){.ov-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.kpis{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+
+<header class="app"><div class="wrap">
+  <div class="brand">
+    <div class="logo"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <h1>Churn Radar SSL</h1><span class="live"><span class="dot"></span>Live data</span>
+      </div>
+      <p>Early churn prediction · Managed Spanish-Speaking LATAM book · Insider One</p>
+    </div>
+  </div>
+  <div class="src-line">
+    <span>Sources: <b>Salesforce + OXT/Zendesk (Zoe MCP)</b></span>
+    <span>Snapshot: <b>Sep 16, 2026</b></span>
+    <span>Scope: <b>Accounts with Zendesk coverage · Region=LATAM excl. Brazil</b></span>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <div class="kpis" id="kpis"></div>
+
+  <div class="section-title"><h2>Portfolio overview</h2><span>risk distribution across the covered book</span></div>
+  <div class="ov-grid">
+    <div class="card pad"><div style="font:700 10px/1 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">By country</div><div id="byCountry"></div></div>
+    <div class="card pad"><div style="font:700 10px/1 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">By segment</div><div id="bySeg"></div></div>
+    <div class="card pad"><div style="font:700 10px/1 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">By risk reason</div><div id="byReason"></div></div>
+  </div>
+  <div style="font:500 10.5px/1 var(--mono);color:var(--muted);margin-top:8px"><span style="color:var(--rose)">■</span> critical &nbsp; <span style="color:var(--amber)">■</span> high &nbsp; <span style="color:var(--sky)">■</span> medium &nbsp; <span style="color:var(--muted)">■</span> low</div>
+
+  <div class="section-title"><h2>Accounts</h2><span>click a row for the full multichannel profile</span></div>
+  <div class="toolbar">
+    <input id="q" type="text" placeholder="Search account, CSM, country…" aria-label="Search">
+    <select id="fCountry" aria-label="Country"><option value="">All countries</option></select>
+    <select id="fSeg" aria-label="Segment"><option value="">All segments</option></select>
+    <select id="fBand" aria-label="Risk">
+      <option value="">All risk</option><option value="critical">Critical</option>
+      <option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option>
+    </select>
+    <select id="fReason" aria-label="Motivo"><option value="">Todos los motivos</option></select>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="card"><div class="tbl-wrap"><table id="tbl">
+    <thead><tr>
+      <th data-k="score" class="num">Score</th><th data-k="name">Account</th>
+      <th data-k="country">Country</th><th data-k="seg">Segment</th>
+      <th data-k="stage">Renewal</th><th data-k="days" class="num">Days</th>
+      <th data-k="nps" class="num">NPS</th><th data-k="tickets" class="num">Tickets</th>
+      <th data-k="bug_tickets" class="num">Bugs</th><th data-k="reason">Motivo</th><th data-k="csm">CSM</th><th>Signals</th>
+    </tr></thead><tbody id="rows"></tbody>
+  </table></div></div>
+  <div class="note info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg><span><b>Scope:</b> the 40 SSL managed accounts that are present in Zendesk/OXT — the active support book. Signal coverage varies (27 with an open renewal, 32 with tickets, 16 with NPS); the three dots show which signals each account has. <b>Bugs</b> = troubleshooting tickets (90d). <b>Spiky, call recordings and customer Slack</b> are not exposed via Zoe today; per-account Jira/Sentry is not available (Zoe's Jira data is not customer-attributable). <b>Motivo — Baja utilización:</b> ahora usa actividad real de campañas de los últimos 30 días desde Zoe (onsite_campaign_audit) para 30/40 cuentas; 10 cuentas sin panel de Zoe identificado usan la inferencia por ausencia de señales, marcadas en el drawer de cada cuenta.</span></div>
+
+  <div class="section-title"><h2>Weekly executive digest</h2><span>generated from the data</span></div>
+  <div class="digest-grid">
+    <div class="card pad">
+      <div style="font:700 10px/1 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Top churn drivers</div>
+      <div id="drivers"></div>
+    </div>
+    <div class="card pad">
+      <div style="font:700 10px/1 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Highest-risk accounts</div>
+      <div id="topaccts"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+        <button class="btn btn-p" onclick="toast('Weekly digest sent to the team inbox and Slack (simulated)','success')">Send digest to team</button>
+        <button class="btn" onclick="toast('Alert rule: score >= 55 -> email + Slack (simulated)','info')">Configure alerts</button>
+      </div>
+    </div>
+  </div>
+  <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span><b>Alerts, report delivery and CSM insights</b> are functional here but the <em>actual sending</em> (email/Slack) and <em>shared persistence</em> of insights require the app backend — an artifact runs only in the browser. Insights you add below are stored only in <em>your</em> browser.</span></div>
+</main>
+
+<footer><div class="wrap f">
+  <div><b>Score methodology (transparent heuristic, 0–100):</b> renewal stage (Churn Save +45 · Rejected +28 · Renewal Plan CSM-AD +15 · others +5–10) + renewal proximity (&le;60d +15, &le;120d +8) + NPS (detractor &le;6 +25, passive +6, promoter −8) + support (open tickets, 90d volume, troubleshooting/bug load, resolution time). Not a trained ML model.</div>
+  <div style="margin-top:6px"><b>Motivo de riesgo (misma heurística, por categoría):</b> Renovación/comercial = etapa+proximidad de renovación. Producto/soporte = bugs, tickets abiertos, volumen y tiempo de resolución. Satisfacción = NPS detractor/pasivo. Baja utilización = actividad real de campañas onsite (30d) vía Zoe MCP para cuentas con panel identificado (peso reducido si el match cuenta→panel es ambiguo); para cuentas sin panel de Zoe resuelto, se usa una inferencia por ausencia de señales de renovación/tickets/NPS. Se asigna el motivo de mayor peso por cuenta.</div>
+  <div class="conf" style="margin-top:6px">⚠ Confidential customer data (Salesforce + Zendesk). Do not share outside Insider One.</div>
+</div></footer>
+
+<div class="overlay" id="overlay" hidden><div class="drawer" id="drawer"></div></div>
+<div id="toast"></div>
+
+<script>
+const DATA = [{"name": "Correo Solucion SAPI de CV", "country": "Mexico", "terr": "NoLA", "seg": "Long-tail", "ind": "Internet", "csm": "karen.oyola", "score": 53, "band": "high", "drivers": ["Renewal in 'Churn Save'", "Overdue renewal"], "coverage": ["renewal"], "renewal": {"stage": "Churn Save", "amt": null, "close": "2026-09-13", "days": -3}, "nps": null, "nps_avg": null, "tickets": 0, "open_tickets": 0, "bug_tickets": 0, "avg_res": null, "key_partner": true}, {"name": "COMUNICACION CELULAR S.A COMCEL S.A - COP", "country": "Colombia", "terr": "SoLA", "seg": "Enterprise", "ind": "Internet", "csm": "alejandra.carrillo", "score": 45, "band": "high", "drivers": ["Renewal in 'Churn Save'"], "coverage": ["renewal", "tickets"], "renewal": {"stage": "Churn Save", "amt": 0, "close": "2027-01-21", "days": 127}, "nps": null, "nps_avg": null, "tickets": 1, "open_tickets": 0, "bug_tickets": 0, "avg_res": 34.0, "key_partner": true}, {"name": "Samsonite S.A.", "country": "Chile", "terr": "SoLA", "seg": "Semi-Enterprise", "ind": "Consumer Products/Retail", "csm": "david.suta", "score": 39, "band": "high", "drivers": ["Renews in 13d", "4 open tickets", "High support volume (59/90d)", "High bug/troubleshooting load (22)"], "coverage": ["renewal", "tickets", "nps"], "renewal": {"stage": "Commercial Planning", "amt": 15110856.77, "close": "2026-09-29", "days": 13}, "nps": 10.0, "nps_avg": 10.0, "tickets": 59, "open_tickets": 4, "bug_tickets": 22, "avg_res": 35.3, "key_partner": true}, {"name": "Sistecredito SAS", "country": "Colombia", "terr": "SoLA", "seg": "Semi-Enterprise", "ind": "Financial Services", "csm": "david.suta", "score": 39, "band": "high", "drivers": ["Renewal in 'Renewal Plan CSM-AD'", "2 open tickets", "High support volume (24/90d)", "High bug/troubleshooting load (14)"], "coverage": ["renewal", "tickets", "nps"], "renewal": {"stage": "Renewal Plan CSM-AD", "amt": null, "close": "2026-12-28", "days": 103}, "nps": 9.0, "nps_avg": 8.2, "tickets": 24, "open_tickets": 2, "bug_tickets": 14, "avg_res": 32.4, "key_partner": true}, {"name": "GRUPO AUTOMOTRIZ CORDILERA SA", "country": "Chile", "terr": "SoLA", "seg": "Semi-Enterprise", "ind": "Pure Player", "csm": "santiago.valle", "score": 36, "band": "medium", "drivers": ["Renewal in 'Rejected'", "Overdue renewal"], "coverage": ["renewal"], "renewal": {"stage": "Rejected", "amt": 2849, "close": "2025-05-31", "days": -473}, "nps": null, "nps_avg": null, "tickets": 0, "open_tickets": 0, "bug_tickets": 0, "avg_res": null, "key_partner": true}, {"name": "Dorel Juvenile Chile S.A.", "country": "Chile", "terr": "SoLA", "seg": "Semi-Enterprise", "ind": "Consumer Products/Retail", "csm": "santiago.valle", "score": 28, "band": "medium", "drivers": ["Renewal in 'Rejected'", "Overdue renewal"], "coverage": ["renewal", "tickets", "nps"], "renewal": {"stage": "Rejected", "amt": 221.1, "close": "2025-06-14", "days": -459}, "nps": 10.0, "nps_avg": 10.0, "tickets": 4, "open_tickets": 0, "bug_tickets": 1, "avg_res": 41.4, "key_partner": true}, {"name": "TV AZTECA SAB DE CV", "country": "Mexico", "terr": "NoLA", "seg": "Semi-Enterprise", "ind": "Media", "csm": "karen.oyola", "score": 24, "band": "medium", "drivers": ["Slow resolution (112h avg)"], "coverage": ["renewal", "tickets"], "renewal": {"stage": "Commercial Planning", "amt": null, "close": "2026-12-13", "days": 88}, "nps": null, "nps_avg": null, "tickets": 1, "open_tickets": 0, "bug_tickets": 1, "avg_res": 112.0, "key_partner": true}, {"name": "CUEROS VELEZ SAS", "country": "Colombia", "terr": "SoLA", "seg": "Semi-Enterprise", "ind": "Consumer Products/Retail", "csm": "santiago.valle", "score": 23, "band": "medium", "drivers": ["Renews in 8d"], "coverage": ["renewal", "tickets"], "renewal": {"stage": "Commercial Planning", "amt": 11914.86, "close": "2026-09-24", "days": 8}, "nps": null, "nps_avg": null, "tickets": 1, "open_tickets": 0, "bug_tickets": 1, "avg_res": 31.0, "key_partner": true}, {"name": "GRUPO DE DIAGNOSTICO ARIES", "country": "Mexico", "terr": "NoLA", "seg": "Semi-Enterprise", "ind": "Healthcare (Services)", "csm": "karen.oyola", "score": 22, "band": "medium", "drivers": ["Renews in 44d"], "coverage": ["renewal", "tickets", "nps"], "renewal": {"stage": "Commercial Planning", "amt": 9087.21, "close": "2026-10-30", "days": 44}, "nps": 10.0, "nps_avg": 10.0, "tickets": 9, "open_tickets": 0, "bug_tickets": 8, "avg_res": 26.5, "key_partner": true}, {"name": "COPPEL, S.A. DE C.V.", "country": "Mexico", "terr": "NoLA", "seg": "Enterprise", "ind": "Consumer Products/Retail", "csm": "karen.oyola", "score": 20, "band": "medium", "drivers": ["NPS passive (8.0)", "Elevated resolution time (50h avg)"], "coverage": ["tickets", "nps"], "renewal": null, "nps": 8.0, "nps_avg": 8.0, "tickets": 9, "open_tickets": 1, "bug_tickets": 6, "avg_res": 50.0, "key_partner": true}, {"name": "SKY AIRLINE PERU S.A.C.", "country": "Chile", "terr": "SoLA", "seg": "Semi-Enterprise", "ind": "Consumer Products/Retail", "csm": "santiago.valle", "score": 19, "band": "low", "drivers": [], "coverage": ["renewal", "tickets"], "renewal": {"stage": "Commercial Planning", "amt": null, "close": "2026-12-30", "days": 105}, "nps": null, "nps_avg": null, "tickets": 2, "open_tickets": 1, "bug_tickets": 1, "avg_res": 47.7, "key_partner": true}, {"name": "Inversiones AMPM S.A.", "country": "Costa Rica", "terr": "NoLA", "seg": "Semi-Enterprise", "ind": "Consumer Services", "csm": "karen.oyola", "score": 19, "band": "low", "drivers": ["Renews in 13d", "Elevated resolution time (55h avg)"], "coverage": ["renewal", "tickets", "nps"], "renewal": {"stage": "Commercial Planning", "amt": 11391.67, "close": "2026-09-29", "days": 13}, "nps": 10.0, "nps_avg": 9.5, "tickets": 4, "open_tickets": 0, "bug_tickets": 0, "avg_res": 55.4, "key_partner": true}, {"name": "Cencosud Scotiabank", "country": "Chile", "terr": "SoLA", "seg": "Semi-Enterprise", "ind": "Financial Services", "csm": "david.suta", "score": 18, "band": "low", "drivers": ["NPS passive (7.0)"], "coverage": ["renewal", "tickets", "nps"], "renewal": {"stage": "Backlog", "amt": null, "close": "2027-06-01", "days": 258}, "nps": 7.0, "nps_avg": 7.0, "tickets": 13, "open_tickets": 0, "bug_tickets": 7, "avg_res": 32.7, "key_partner": true}, {"name": "Easy Retail S.A.", "country": "Chile", "terr": "SoLA", "seg": "Enterprise", "ind": "Consumer Products/Retail", "csm": "alejandra.carrillo", "score": 18, "band": "low", "drivers": ["2 open tickets"], "coverage": ["renewal", "tickets"], "renewal": {"stage": "POC - Value Validation", "amt": 16541.25, "close": "2027-01-31", "days": 137}, "nps": null, "nps_avg": null, "tickets": 4, "open_tickets": 2, "bug_tickets": 1, "avg_res": 39.5, "key_partner": true}, {"name": "Alicorp SAA", "country": "Bolivia", "terr": "SoLA", "seg": "Enterprise", "ind": "Pure Player", "csm": "santiago.valle", "score": 16, "band": "low", "drivers": [], "coverage": ["renewal"], "renewal": {"stage": "Commercial Planning", "amt": null, "close": "2026-12-31", "days": 106}, "nps": null, "nps_avg": null, "tickets": 0, "open_tickets": 0, "bug_tickets": 0, "avg_res": null, "key_partner": true}, {"name": "Insider Peru SAC - primaxperu - 1", "country": "Peru", "terr": "SoLA", "seg": "Enterprise", "ind": "Consumer Products/Retail", "csm": "david.suta", "score": 16, "band": "low", "drivers": ["High support volume (20/90d)", "High bug/troubleshooting load (12)"], "coverage": ["tickets"], "renewal": null, "nps": null, "nps_avg": null, "tickets": 20, "open_tickets": 0, "bug_tickets": 12, "avg_res": 27.8, "key_partner": true}, {"name": "NALSANI S.A.S - 1", "country": "Colombia", "terr": "SoLA", "seg": "Enterprise", "ind": "Consumer Products/Retail", "csm": "david.suta", "score": 15, "band": "low", "drivers": ["Renews in 55d"], "coverage": ["renewal", "tickets", "nps"], "renewal": {"stage": "Commercial Planning", "amt": 18390.96, "close": "2026-11-10", "days": 55}, "nps": 10.0, "nps_avg": 10.0, "tickets": 4, "open_tickets": 0, "bug_tickets": 3, "avg_res": 40.3, "key_partner": true}, {"name": "OPERADORA DE CINEMAS, S.A. de C.V.", "country": "Mexico", "terr": "NoLA", "seg": "Enterprise", "ind": "Travel&Leisure", "csm": "karen.oyola", "score": 10, "band": "low", "drivers": [], "coverage": ["renewal", "tickets", "nps"], "renewal": {"stage": "Commercial & Procurement", "amt": 35240.14, "close": "2026-12-14", "days": 89}, "nps": 10.0, "nps_avg": 10.0, "tickets": 3, "open_tickets": 0, "bug_tickets": 3, "avg_res": 32.2, "key_partner": true}, {"name": "Play Digital S.A.", "country": "Argentina", "terr": "SoLA", "seg": "Enterprise", "ind": "Financial Services", "csm": "david.suta", "score": 8, "band": "low", "drivers": [], "coverage": ["renewal", "tickets"], "renewal": {"stage": "Backlog", "amt": null, "close": "2027-02-28", "days": 165}, "nps": null, "nps_avg": null, "tickets": 8, "open_tickets": 0, "bug_tickets": 4, "avg_res": 24.9, "key_partner": true}, {"name": "CORONA INDUSTRIAL S.A.S.", "country": "Colombia", "terr": "SoLA", "seg": "Enterprise", "ind": "Consumer Products/Retail", "csm": "david.suta", "score": 8, "band": "low", "drivers": [], "coverage": ["renewal", "tickets", "nps"], "renewal": {"stage": "Backlog", "amt": null, "close": "2026-12-30", "days": 105}, "nps": 10.0, "nps_avg": 10.0, "tickets": 6, "open_tickets": 1, "bug_tickets": 2, "avg_res": 18.9, "key_partner": true}, {"name": "Uvi Tech, S.A.P.I. de C.V.", "country": "Mexico", "terr": "NoLA", "seg": "Enterprise", "ind": "Consumer Products/Retail", "csm": "alejandra.carrillo", "score": 7, "band": "low", "drivers": [], "coverage": ["renewal", "tickets"], "renewal": {"stage": "Approved", "amt": 3543.87, "close": "2024-01-31", "days": -959}, "nps": null, "nps_avg": null, "tickets": 8, "open_tickets": 0, "bug_tickets": 7, "avg_res": 25.8, "key_partner": true}, {"name": "Uvi Tech Chile SpA - kavakcl2", "country": "Mexico", "terr": "NoLA", "seg": "Enterprise", "ind": "Consumer Products/Retail", "csm": "alejandra.carrillo", "score": 6, "band": "low", "drivers": ["NPS passive (8.0)"], "coverage": ["renewal", "tickets", "nps"], "renewal": {"stage": "Approved", "amt": 4561.96, "close": "2024-01-31", "days": -959}, "nps": 8.0, "nps_avg": 8.0, "tickets": 4, "open_tickets": 0, "bug_tickets": 2, "avg_res": 32.5, "key_partner": true}, {"name": "AWS - Banmedica - 1", "country": "Chile", "terr": "SoLA", "seg": "Long-tail", "ind": "Healthcare (Services)", "csm": "santiago.valle", "score": 5, "band": "low", "drivers": [], "coverage": ["renewal", "tickets"], "renewal": {"stage": "Backlog", "amt": null, "close": "2027-03-10", "days": 175}, "nps": null, "nps_avg": null, "tickets": 3, "open_tickets": 0, "bug_tickets": 3, "avg_res": 32.1, "key_partner": true}, {"name": "ECUAPAYPHONE C.A.", "country": "Ecuador", "terr": "SoLA", "seg": "Long-tail", "ind": "Financial Services", "csm": "santiago.valle", "score": 5, "band": "low", "drivers": [], "coverage": ["renewal", "tickets"], "renewal": {"stage": "Backlog", "amt": null, "close": "2027-03-13", "days": 178}, "nps": null, "nps_avg": null, "tickets": 5, "open_tickets": 0, "bug_tickets": 1, "avg_res": 44.3, "key_partner": true}, {"name": "Black Ultra", "country": "Mexico", "terr": "NoLA", "seg": "Enterprise", "ind": "Consumer Products/Retail", "csm": "karen.oyola", "score": 5, "band": "low", "drivers": [], "coverage": ["renewal", "tickets"], "renewal": {"stage": "Backlog", "amt": null, "close": "2027-01-18", "days": 124}, "nps": null, "nps_avg": null, "tickets": 1, "open_tickets": 0, "bug_tickets": 0, "avg_res": 5.2, "key_partner": true}, {"name": "El Palacio de Hierro, S.A. de C.V.", "country": "Mexico", "terr": "NoLA", "seg": "Semi-Enterprise", "ind": "Consumer Products/Retail", "csm": "karen.oyola", "score": 4, "band": "low", "drivers": ["Elevated resolution time (69h avg)"], "coverage": ["tickets"], "renewal": null, "nps": null, "nps_avg": null, "tickets": 1, "open_tickets": 0, "bug_tickets": 0, "avg_res": 69.0, "key_partner": true}, {"name": "Comercial Milan Limitada", "country": "Chile", "terr": "SoLA", "seg": "Long-tail", "ind": "Consumer Products/Retail", "csm": "santiago.valle", "score": 0, "band": "low", "drivers": [], "coverage": ["renewal", "tickets", "nps"], "renewal": {"stage": "Backlog", "amt": null, "close": "2027-03-13", "days": 178}, "nps": 10.0, "nps_avg": 10.0, "tickets": 2, "open_tickets": 1, "bug_tickets": 1, "avg_res": 8.1, "key_partner": true}, {"name": "Comercial 3or SpA", "country": "Chile", "terr": "SoLA", "seg": "Long-tail", "ind": "Consumer Products/Retail", "csm": "santiago.valle", "score": 0, "band": "low", "drivers": [], "coverage": [], "renewal": null, "nps": null, "nps_avg": null, "tickets": 0, "open_tickets": 0, "bug_tickets": 0, "avg_res": null, "key_partner": true}, {"name": "Banco Credicoop Cooperativo Ltdo.", "country": "Argentina", "terr": "SoLA", "seg": "Semi-Enterprise", "ind": "Financial Services", "csm": "santiago.valle", "score": 0, "band": "low", "drivers": [], "coverage": ["tickets", "nps"], "renewal": null, "nps": 10.0, "nps_avg": 10.0, "tickets": 6, "open_tickets": 0, "bug_tickets": 5, "avg_res": 24.6, "key_partner": true}, {"name": "ALL NUTRITION COM LTDA", "country": "Chile", "terr": "SoLA", "seg": "Semi-Enterprise", "ind": "Consumer Products/Retail", "csm": "santiago.valle", "score": 0, "band": "low", "drivers": [], "coverage": [], "renewal": null, "nps": null, "nps_avg": null, "tickets": 0, "open_tickets": 0, "bug_tickets": 0, "avg_res": null, "key_partner": true}, {"name": "Viña Concha y Toro S.A.", "country": "Chile", "terr": "SoLA", "seg": "Semi-Enterprise", "ind": "Consumer Products/Retail", "csm": "david.suta", "score": 0, "band": "low", "drivers": [], "coverage": ["renewal", "tickets", "nps"], "renewal": {"stage": "Backlog", "amt": null, "close": "2027-02-27", "days": 164}, "nps": 10.0, "nps_avg": 10.0, "tickets": 2, "open_tickets": 0, "bug_tickets": 2, "avg_res": 25.6, "key_partner": true}, {"name": "Fundación El Espectador", "country": "Colombia", "terr": "SoLA", "seg": "Semi-Enterprise", "ind": "Marketing/Advertising", "csm": "santiago.valle", "score": 0, "band": "low", "drivers": [], "coverage": ["tickets", "nps"], "renewal": null, "nps": 9.0, "nps_avg": 9.5, "tickets": 1, "open_tickets": 0, "bug_tickets": 0, "avg_res": 14.9, "key_partner": true}, {"name": "Grupo Magia Natural SAS", "country": "Colombia", "terr": "SoLA", "seg": "Semi-Enterprise", "ind": "Healthcare (Services)", "csm": "santiago.valle", "score": 0, "band": "low", "drivers": [], "coverage": ["tickets"], "renewal": null, "nps": null, "nps_avg": null, "tickets": 1, "open_tickets": 0, "bug_tickets": 1, "avg_res": 28.1, "key_partner": true}, {"name": "Pollo Brujo de Centroamerica, S.A.", "country": "Guatemala", "terr": "NoLA", "seg": "Semi-Enterprise", "ind": "Consumer Products/Retail", "csm": "santiago.valle", "score": 0, "band": "low", "drivers": [], "coverage": [], "renewal": null, "nps": null, "nps_avg": null, "tickets": 0, "open_tickets": 0, "bug_tickets": 0, "avg_res": null, "key_partner": true}, {"name": "PASE, SERVICIOS ELECTRONICOS", "country": "Mexico", "terr": "NoLA", "seg": "Semi-Enterprise", "ind": "Telco", "csm": "María Paz Silva", "score": 0, "band": "low", "drivers": [], "coverage": ["tickets"], "renewal": null, "nps": null, "nps_avg": null, "tickets": 1, "open_tickets": 0, "bug_tickets": 0, "avg_res": 12.0, "key_partner": true}, {"name": "RAIZEN ARGENTINA SAU", "country": "Argentina", "terr": "SoLA", "seg": "Enterprise", "ind": "Transportation Services", "csm": "david.suta", "score": 0, "band": "low", "drivers": [], "coverage": ["renewal", "tickets", "nps"], "renewal": {"stage": "Backlog", "amt": null, "close": "2027-03-15", "days": 180}, "nps": 9.0, "nps_avg": 9.0, "tickets": 3, "open_tickets": 1, "bug_tickets": 1, "avg_res": 29.6, "key_partner": true}, {"name": "Sodimac Colombia S.A.", "country": "Colombia", "terr": "SoLA", "seg": "Enterprise", "ind": "Consumer Products/Retail", "csm": "david.suta", "score": 0, "band": "low", "drivers": [], "coverage": [], "renewal": null, "nps": null, "nps_avg": null, "tickets": 0, "open_tickets": 0, "bug_tickets": 0, "avg_res": null, "key_partner": true}, {"name": "Brücke Data Intelligence LLC - 1", "country": "Colombia", "terr": "SoLA", "seg": "Enterprise", "ind": "Marketing/Advertising", "csm": "santiago.valle", "score": 0, "band": "low", "drivers": [], "coverage": [], "renewal": null, "nps": null, "nps_avg": null, "tickets": 0, "open_tickets": 0, "bug_tickets": 0, "avg_res": null, "key_partner": true}, {"name": "Uvi Tech Chile SpA - Kavak Argentina", "country": "Mexico", "terr": "NoLA", "seg": "Enterprise", "ind": "Consumer Products/Retail", "csm": "alejandra.carrillo", "score": 0, "band": "low", "drivers": [], "coverage": ["renewal", "tickets"], "renewal": {"stage": "Approved", "amt": 2954.29, "close": "2024-01-31", "days": -959}, "nps": null, "nps_avg": null, "tickets": 1, "open_tickets": 0, "bug_tickets": 0, "avg_res": 33.2, "key_partner": true}, {"name": "Overnel S.A.", "country": "Uruguay", "terr": "SoLA", "seg": "Enterprise", "ind": "Consumer Products/Retail", "csm": "david.suta", "score": 0, "band": "low", "drivers": [], "coverage": ["tickets"], "renewal": null, "nps": null, "nps_avg": null, "tickets": 2, "open_tickets": 0, "bug_tickets": 2, "avg_res": 22.4, "key_partner": true}];
+const $=s=>document.querySelector(s);
+let state={q:'',country:'',seg:'',band:'',reason:'',sortK:'score',sortDir:-1};
+const bandLabel={critical:'Critical',high:'High',medium:'Medium',low:'Low'};
+const bandColor={critical:'var(--rose)',high:'var(--amber)',medium:'var(--sky)',low:'var(--muted)'};
+const REASON_LABEL={renewal:'Renovación / comercial',product:'Producto / soporte',satisfaction:'Satisfacción (NPS)',usage:'Baja utilización',none:'Señal limitada'};
+const REASON_COLOR={renewal:'var(--sky)',product:'var(--rose)',satisfaction:'var(--amber)',usage:'var(--purple)',none:'var(--muted)'};
+// Real 30d campaign-activity data pulled live from Zoe MCP (onsite_campaign_audit), 2026-08-23→2026-09-21.
+// events = total onsite campaign events (impressions+clicks+conversions+...) in the window; conf = match confidence
+// resolving Salesforce account → Zoe panel (high = exact/unambiguous panel match, medium/low = ambiguous brand/multi-panel match, null = no panel match found).
+const ZOE_USAGE=[null,{events:13313111,conf:'high'},{events:1025015,conf:'high'},{events:35045,conf:'high'},null,null,
+{events:4298424,conf:'high'},{events:4561473,conf:'high'},null,{events:19007430,conf:'high'},{events:6253745,conf:'high'},
+{events:0,conf:'high'},{events:1158438,conf:'high'},{events:7548521,conf:'high'},{events:0,conf:'low'},{events:0,conf:'high'},
+{events:1969418,conf:'high'},{events:3931187,conf:'high'},null,{events:329655,conf:'high'},{events:28,conf:'high'},
+{events:0,conf:'high'},{events:0,conf:'high'},{events:67,conf:'high'},null,{events:259138,conf:'medium'},
+null,null,{events:0,conf:'medium'},{events:1442689,conf:'high'},{events:94634,conf:'high'},
+{events:283768,conf:'high'},{events:26722,conf:'high'},{events:46050,conf:'high'},{events:0,conf:'medium'},{events:5563,conf:'high'},
+{events:55612764,conf:'medium'},{events:0,conf:'low'},{events:0,conf:'high'},null];
+DATA.forEach((d,i)=>{const u=ZOE_USAGE[i];if(u){d.usage30d=u.events;d.usageConf=u.conf;}});
+function usageTier(n){return n>=1e6?{label:'Alta',w:0}:n>=1e5?{label:'Media',w:4}:n>=1e3?{label:'Baja',w:14}:n>0?{label:'Muy baja',w:24}:{label:'Sin actividad',w:35};}
+function reasonWeights(d){
+  const rn=d.renewal;let renewal=0;
+  if(rn){renewal+=rn.stage==='Churn Save'?45:rn.stage==='Rejected'?28:rn.stage==='Renewal Plan CSM-AD'?15:8;
+    if(rn.days<0)renewal+=20;else if(rn.days<=60)renewal+=10;}
+  const product=(d.bug_tickets||0)*4+(d.open_tickets||0)*5+((d.avg_res&&d.avg_res>48)?12:0)+((d.tickets||0)>=5?6:0);
+  const satisfaction=d.nps==null?0:(d.nps<=6?25:(d.nps<=8?8:0));
+  let usage;
+  if(d.usage30d!=null){
+    const t=usageTier(d.usage30d);
+    usage=d.usageConf==='high'?t.w:d.usageConf==='medium'?Math.round(t.w*0.6):Math.round(t.w*0.35);
+  } else {
+    usage=(!rn&&!(d.tickets)&&d.nps==null)?30:0;
+  }
+  return {renewal,product,satisfaction,usage};
+}
+function reasonCategory(d){const w=reasonWeights(d);const top=Object.entries(w).sort((a,b)=>b[1]-a[1])[0];return top[1]<=0?'none':top[0];}
+function reasonPill(d){const k=reasonCategory(d);return `<span class="pill" style="color:${REASON_COLOR[k]};border-color:${REASON_COLOR[k]}">${REASON_LABEL[k]}</span>`;}
+const fmt=n=>n==null?'—':'$'+Math.round(n).toLocaleString('en-US');
+function loadAdj(){try{return JSON.parse(localStorage.getItem('csm_adj_ssl')||'{}')}catch(e){return {}}}
+function saveAdj(o){try{localStorage.setItem('csm_adj_ssl',JSON.stringify(o))}catch(e){}}
+let ADJ=loadAdj();
+function effScore(d){const a=ADJ[d.name];return a&&typeof a.score==='number'?a.score:d.score;}
+function effBand(s){return s>=55?'critical':s>=38?'high':s>=20?'medium':'low';}
+
+[...new Set(DATA.map(d=>d.country))].sort().forEach(c=>{if(c){const o=document.createElement('option');o.value=c;o.textContent=c;$('#fCountry').appendChild(o);}});
+['Enterprise','Semi-Enterprise','Long-tail'].forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;$('#fSeg').appendChild(o);});
+Object.keys(REASON_LABEL).forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=REASON_LABEL[k];$('#fReason').appendChild(o);});
+
+function filtered(){return DATA.filter(d=>{
+  const b=effBand(effScore(d));
+  if(state.q){const q=state.q.toLowerCase();if(!(d.name.toLowerCase().includes(q)||(d.csm||'').toLowerCase().includes(q)||(d.country||'').toLowerCase().includes(q)))return false;}
+  if(state.country&&d.country!==state.country)return false;
+  if(state.seg&&d.seg!==state.seg)return false;
+  if(state.band&&b!==state.band)return false;
+  if(state.reason&&reasonCategory(d)!==state.reason)return false;
+  return true;});}
+function sortRows(rows){const k=state.sortK,dir=state.sortDir;
+  return rows.slice().sort((a,b)=>{let va,vb;
+    if(k==='score'){va=effScore(a);vb=effScore(b);}
+    else if(k==='stage'){va=a.renewal?a.renewal.stage:'';vb=b.renewal?b.renewal.stage:'';}
+    else if(k==='days'){va=a.renewal?a.renewal.days:99999;vb=b.renewal?b.renewal.days:99999;}
+    else if(k==='nps'){va=a.nps==null?999:a.nps;vb=b.nps==null?999:b.nps;}
+    else if(k==='tickets'){va=a.tickets||0;vb=b.tickets||0;}
+    else if(k==='bug_tickets'){va=a.bug_tickets||0;vb=b.bug_tickets||0;}
+    else if(k==='reason'){va=REASON_LABEL[reasonCategory(a)];vb=REASON_LABEL[reasonCategory(b)];}
+    else{va=(a[k]||'').toString().toLowerCase();vb=(b[k]||'').toString().toLowerCase();}
+    if(va<vb)return -dir;if(va>vb)return dir;return 0;});}
+function kpis(){
+  const crit=DATA.filter(d=>effBand(effScore(d))==='critical').length;
+  const high=DATA.filter(d=>effBand(effScore(d))==='high').length;
+  const multi=DATA.filter(d=>(d.coverage||[]).length>=2).length;
+  const detr=DATA.filter(d=>d.nps!=null&&d.nps<=6).length;
+  const opent=DATA.reduce((a,d)=>a+(d.open_tickets||0),0);
+  const K=[
+    {l:'Accounts (Zendesk)',v:DATA.length,s:'Spanish-Speaking LATAM',c:'#fff'},
+    {l:'Critical + high',v:crit+high,s:crit+' critical · '+high+' high',c:'var(--rose)'},
+    {l:'Multichannel coverage',v:multi,s:'>=2 data signals',c:'var(--sky)'},
+    {l:'NPS detractors',v:detr,s:'of 16 with NPS',c:'var(--amber)'},
+    {l:'Open tickets',v:opent,s:'across the book',c:'var(--purple)'},
+  ];
+  $('#kpis').innerHTML=K.map(k=>`<div class="kpi"><div class="k-l">${k.l}</div><div class="k-v tnum" style="color:${k.c}">${k.v}</div><div class="k-s">${k.s}</div></div>`).join('');
+}
+function breakdown(key,el){
+  const g={};DATA.forEach(d=>{const k=d[key]||'—';(g[k]=g[k]||{c:0,crit:0,high:0,med:0,low:0}).c++;const b=effBand(effScore(d));g[k][b==='critical'?'crit':b]++;});
+  const arr=Object.entries(g).sort((a,b)=>(b[1].crit+b[1].high)-(a[1].crit+a[1].high)||b[1].c-a[1].c);
+  const mx=Math.max(...arr.map(x=>x[1].c),1);
+  el.innerHTML=arr.map(([k,v])=>{const seg=(n,col)=>n?`<i style="width:${n/mx*100}%;background:${col}"></i>`:'';
+    return `<div class="brk"><span class="lab">${k}</span><span class="bar">${seg(v.crit,'var(--rose)')}${seg(v.high,'var(--amber)')}${seg(v.med,'var(--sky)')}${seg(v.low,'var(--panel-3)')}</span><span class="n">${v.c} · <span style="color:var(--rose)">${v.crit+v.high}</span> risk</span></div>`;}).join('');
+}
+function reasonBreakdown(el){
+  const g={};DATA.forEach(d=>{const k=REASON_LABEL[reasonCategory(d)];(g[k]=g[k]||{c:0,crit:0,high:0,med:0,low:0}).c++;const b=effBand(effScore(d));g[k][b==='critical'?'crit':b]++;});
+  const arr=Object.entries(g).sort((a,b)=>(b[1].crit+b[1].high)-(a[1].crit+a[1].high)||b[1].c-a[1].c);
+  const mx=Math.max(...arr.map(x=>x[1].c),1);
+  el.innerHTML=arr.map(([k,v])=>{const seg=(n,col)=>n?`<i style="width:${n/mx*100}%;background:${col}"></i>`:'';
+    return `<div class="brk"><span class="lab">${k}</span><span class="bar">${seg(v.crit,'var(--rose)')}${seg(v.high,'var(--amber)')}${seg(v.med,'var(--sky)')}${seg(v.low,'var(--panel-3)')}</span><span class="n">${v.c} · <span style="color:var(--rose)">${v.crit+v.high}</span> risk</span></div>`;}).join('');
+}
+function covDots(d){const has=x=>(d.coverage||[]).includes(x);return `<span class="cov" title="renewal / tickets / NPS"><i class="${has('renewal')?'on':''}"></i><i class="${has('tickets')?'on':''}"></i><i class="${has('nps')?'on':''}"></i></span>`;}
+function stageColor(s){return s==='Churn Save'?'var(--rose)':s==='Rejected'?'var(--purple)':s==='Renewal Plan CSM-AD'?'var(--sky)':'var(--muted)';}
+function daysColor(d){return d<0?'var(--rose)':d<=60?'var(--amber)':d<=120?'var(--sky)':'var(--muted)';}
+function npsColor(n){return n==null?'var(--muted)':n<=6?'var(--rose)':n<=8?'var(--amber)':'var(--emerald)';}
+function render(){
+  kpis();breakdown('country',$('#byCountry'));breakdown('seg',$('#bySeg'));reasonBreakdown($('#byReason'));
+  const rows=sortRows(filtered());
+  $('#count').textContent=rows.length+' of '+DATA.length+' accounts';
+  $('#rows').innerHTML=rows.map(d=>{const s=effScore(d),b=effBand(s),adj=ADJ[d.name]&&typeof ADJ[d.name].score==='number';const rn=d.renewal;
+    return `<tr data-i="${DATA.indexOf(d)}">
+      <td class="num"><span class="scorebadge b-${b}">${s}${adj?'*':''}</span></td>
+      <td><div class="acc">${d.name}</div><div class="sub">${d.ind||''}</div></td>
+      <td><span class="mono" style="font-size:12px">${d.country||'—'}</span><div class="sub">${d.terr||''}</div></td>
+      <td><span class="pill">${d.seg}</span></td>
+      <td>${rn?`<span class="stg" style="color:${stageColor(rn.stage)}">${rn.stage}</span>`:'<span class="na">—</span>'}</td>
+      <td class="num mono" style="font-size:12px;color:${rn?daysColor(rn.days):'var(--muted)'}">${rn?(rn.days<0?Math.abs(rn.days)+'d over':rn.days+'d'):'—'}</td>
+      <td class="num mono" style="color:${npsColor(d.nps)}">${d.nps==null?'<span class=na>—</span>':d.nps}</td>
+      <td class="num mono">${d.tickets?d.tickets+(d.open_tickets?` <span style="color:var(--amber)">(${d.open_tickets})</span>`:''):'<span class=na>0</span>'}</td>
+      <td class="num mono" style="color:${d.bug_tickets>=5?'var(--rose)':'var(--muted)'}">${d.bug_tickets||'<span class=na>0</span>'}</td>
+      <td>${reasonPill(d)}</td>
+      <td><span class="mono" style="font-size:11px;color:var(--muted)">${d.csm||'—'}</span></td>
+      <td>${covDots(d)}</td>
+    </tr>`;}).join('');
+  document.querySelectorAll('#rows tr').forEach(tr=>tr.onclick=()=>openDrawer(+tr.dataset.i));
+  document.querySelectorAll('thead th[data-k]').forEach(th=>th.classList.toggle('sorted',th.dataset.k===state.sortK));
+}
+function digest(){
+  const dc={};DATA.forEach(d=>(d.drivers||[]).forEach(x=>{const key=x.replace(/\([^)]*\)/,'').replace(/\d+d?/,'').trim();dc[key]=(dc[key]||0)+1;}));
+  const arr=Object.entries(dc).sort((a,b)=>b[1]-a[1]).slice(0,6);const mx=arr.length?arr[0][1]:1;
+  $('#drivers').innerHTML=arr.map(([k,v])=>`<div class="drv"><span class="lab">${k}</span><span class="bar"><span style="width:${v/mx*100}%"></span></span><span class="n">${v}</span></div>`).join('')||'<span class="na">—</span>';
+  const top=DATA.slice().sort((a,b)=>effScore(b)-effScore(a)).slice(0,6);
+  $('#topaccts').innerHTML=top.map(d=>{const s=effScore(d),b=effBand(s);return `<div class="drv" style="cursor:pointer" onclick="openDrawer(${DATA.indexOf(d)})"><span class="scorebadge b-${b}" style="min-width:30px">${s}</span><span class="lab" style="min-width:0;flex:1">${d.name}</span><span class="mono" style="font-size:10px;color:var(--muted)">${d.country}</span></div>`;}).join('');
+}
+function gauge(s,b){const r=30,c=2*Math.PI*r,off=c*(1-s/100),col=bandColor[b];
+  return `<svg viewBox="0 0 74 74"><circle cx="37" cy="37" r="30" fill="none" stroke="var(--panel-3)" stroke-width="7"/><circle cx="37" cy="37" r="30" fill="none" stroke="${col}" stroke-width="7" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${off}" transform="rotate(-90 37 37)"/><text x="37" y="42" text-anchor="middle" font-size="18" font-weight="700" fill="#fff" font-family="var(--mono)">${s}</text></svg>`;}
+function openDrawer(i){
+  const d=DATA[i];const s=effScore(d),b=effBand(s),rn=d.renewal,a=ADJ[d.name]||{};
+  const drivers=(d.drivers||[]).map(x=>`<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span>${x}</span></li>`).join('')||'<li class="na" style="color:var(--muted)">No drivers flagged — limited signals.</li>';
+  $('#drawer').innerHTML=`
+    <div class="d-head"><div>
+      <div class="d-name">${d.name}</div>
+      <div class="d-sub">${d.country} · ${d.terr} · ${d.seg} · ${d.ind||''}<br>CSM: ${d.csm||'—'}${d.key_partner?' · <span style="color:var(--emerald)">Key Partner (OXT)</span>':''}</div>
+    </div><button class="x" onclick="closeDrawer()">✕</button></div>
+    <div class="gaugewrap">
+      <div style="width:74px;height:74px;flex:0 0 auto">${gauge(s,b)}</div>
+      <div><div style="font:700 11px/1 var(--mono);color:${bandColor[b]};text-transform:uppercase;letter-spacing:.5px">${bandLabel[b]} risk</div>
+      <div style="font:700 26px/1 var(--mono);color:#fff;margin-top:4px">${s}<span style="font-size:13px;color:var(--muted)">/100</span></div>
+      <div style="font:500 11px/1.4 var(--mono);color:var(--muted);margin-top:4px">churn score${(typeof a.score==='number')?' · CSM-adjusted':''}</div></div>
+    </div>
+    <div class="signals">
+      <div class="sig"><div class="s-l">Renewal</div><div class="s-v" style="color:${rn?stageColor(rn.stage):'var(--muted)'};font-size:12px">${rn?rn.stage:'—'}</div><div class="s-x">${rn?(rn.days<0?Math.abs(rn.days)+'d overdue':'in '+rn.days+'d')+' · '+fmt(rn.amt):'no open renewal'}</div></div>
+      <div class="sig"><div class="s-l">NPS</div><div class="s-v" style="color:${npsColor(d.nps)}">${d.nps==null?'—':d.nps}</div><div class="s-x">${d.nps_avg!=null?'avg '+d.nps_avg:'no data'}</div></div>
+      <div class="sig"><div class="s-l">Tickets 90d</div><div class="s-v">${d.tickets}</div><div class="s-x">${d.open_tickets} open</div></div>
+      <div class="sig"><div class="s-l">Bug / troubleshooting</div><div class="s-v" style="color:${d.bug_tickets>=5?'var(--rose)':'#fff'}">${d.bug_tickets}</div><div class="s-x">of ${d.tickets} tickets</div></div>
+      <div class="sig"><div class="s-l">Avg resolution</div><div class="s-v" style="color:${d.avg_res&&d.avg_res>48?'var(--amber)':'#fff'}">${d.avg_res!=null?d.avg_res+'h':'—'}</div><div class="s-x">business hours</div></div>
+      <div class="sig"><div class="s-l">Segment</div><div class="s-v" style="font-size:13px">${d.seg}</div><div class="s-x">${d.terr}</div></div>
+    </div>
+    <div style="font:700 10px/1 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin:14px 0 2px">Motivo principal: <span style="color:${REASON_COLOR[reasonCategory(d)]}">${REASON_LABEL[reasonCategory(d)]}</span></div>
+    ${d.usage30d!=null?`<div style="font:12px/1.4 var(--sans);color:var(--muted);margin-bottom:4px">Actividad de campañas (Zoe, 30d): <b style="color:var(--text)">${d.usage30d.toLocaleString('es')}</b> eventos ${d.usageConf!=='high'?`<span style="color:var(--amber)">· match ${d.usageConf==='medium'?'ambiguo':'baja confianza'}</span>`:''}</div>`:`<div style="font:12px/1.4 var(--sans);color:var(--muted);margin-bottom:4px">Sin panel de Zoe identificado para esta cuenta — usando inferencia por ausencia de señales.</div>`}
+    <div class="reason-bars">${(()=>{const w=reasonWeights(d);const mx=Math.max(w.renewal,w.product,w.satisfaction,w.usage,1);return ['renewal','product','satisfaction','usage'].map(k=>`<div class="drv"><span class="lab">${REASON_LABEL[k]}</span><span class="bar"><span style="width:${w[k]/mx*100}%;background:${REASON_COLOR[k]}"></span></span><span class="n" style="color:${REASON_COLOR[k]}">${w[k]}</span></div>`).join('');})()}</div>
+    <div style="font:700 10px/1 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin:14px 0 2px">Risk drivers</div>
+    <ul class="drv-list">${drivers}</ul>
+    <button class="btn btn-p" style="margin-top:10px" onclick="toast('Churn alert sent to Slack and the CSM for ${d.name.replace(/[^A-Za-z0-9 ]/g,'')} (simulated)','alert')">Send churn alert</button>
+    <div class="csm-box">
+      <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 11 2 2 4-4"/></svg>CSM insight (human-in-the-loop)</h3>
+      <p class="hint">Add qualitative context and adjust the score. Saved in your browser only (not shared).</p>
+      <textarea id="csmNote" placeholder="e.g. Sponsor confirmed renewal in last QBR; real risk is lower…">${(a.note||'').replace(/</g,'&lt;')}</textarea>
+      <div class="adj"><span style="font:600 11px/1 var(--mono);color:var(--muted)">Adjusted score</span><input id="csmRange" type="range" min="0" max="100" value="${typeof a.score==='number'?a.score:s}"><span class="v" id="csmVal">${typeof a.score==='number'?a.score:s}</span></div>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn btn-p" onclick="saveInsight('${d.name.replace(/'/g,"\\'")}')">Save insight</button>
+        <button class="btn" onclick="resetInsight('${d.name.replace(/'/g,"\\'")}')">Reset</button>
+      </div>
+      <div class="saved" id="savedMsg"></div>
+    </div>`;
+  $('#overlay').hidden=false;
+  const rg=$('#csmRange');if(rg)rg.oninput=()=>{$('#csmVal').textContent=rg.value;};
+}
+function closeDrawer(){$('#overlay').hidden=true;}
+$('#overlay').onclick=e=>{if(e.target.id==='overlay')closeDrawer();};
+function saveInsight(name){const note=$('#csmNote').value,score=+$('#csmRange').value;ADJ[name]={note,score};saveAdj(ADJ);$('#savedMsg').textContent='✓ Saved in this browser';render();digest();toast('Insight saved. '+name+' score adjusted to '+score,'success');}
+function resetInsight(name){delete ADJ[name];saveAdj(ADJ);closeDrawer();render();digest();toast('Insight reset for '+name,'info');}
+let tId=0;
+function toast(text,type='success'){const el=document.createElement('div');el.className='t '+type;
+  const ic=type==='alert'?'<path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>':type==='info'?'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/>':'<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>';
+  el.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+ic+'</svg><span>'+text+'</span>';
+  $('#toast').appendChild(el);setTimeout(()=>{el.style.transition='opacity .3s';el.style.opacity='0';setTimeout(()=>el.remove(),300);},4200);}
+$('#q').oninput=e=>{state.q=e.target.value;render();};
+$('#fCountry').onchange=e=>{state.country=e.target.value;render();};
+$('#fSeg').onchange=e=>{state.seg=e.target.value;render();};
+$('#fBand').onchange=e=>{state.band=e.target.value;render();};
+$('#fReason').onchange=e=>{state.reason=e.target.value;render();};
+document.querySelectorAll('thead th[data-k]').forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(state.sortK===k)state.sortDir*=-1;else{state.sortK=k;state.sortDir=(k==='name'||k==='country'||k==='csm')?1:-1;}render();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+render();digest();
+</script>
+</body></html>
  --amber:#fbbf24;--amber-bg:rgba(245,158,11,.10);--amber-bd:rgba(245,158,11,.28);
  --emerald:#34d399;--emerald-bg:rgba(16,185,129,.10);--emerald-bd:rgba(16,185,129,.28);
  --sky:#38bdf8;--sky-bg:rgba(56,189,248,.10);--sky-bd:rgba(56,189,248,.28);
